@@ -1,1 +1,1 @@
-# Cybersecurity-Home-Lab-Projects
+Exploring password cracking techniques using John the Ripper
