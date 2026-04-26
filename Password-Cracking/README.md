@@ -108,7 +108,10 @@ Now I need to run John with updated rules and see if I can crack remaining hashe
 
 ```
 ┌──(kali㉿kali)-[~/Git/Cybersecurity-Home-Lab-Projects/Password-Cracking/Files]
-└─$ john --wordlist=dinos.txt --rules=Dinos --config=johnRedacted.conf --format=raw-md5 hashes > Passwords.txt
+└─$ john --wordlist=dinos.txt --rules=Dinos --config=johnRedacted.conf --format=raw-md5 hashes 
+
+┌──(kali㉿kali)-[~/Git/Cybersecurity-Home-Lab-Projects/Password-Cracking/Files]
+└─$ john --show --format=raw-md5 hashes > Passwords.txt
 ```
 
 ### Results
