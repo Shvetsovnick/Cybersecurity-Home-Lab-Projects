@@ -135,6 +135,7 @@ In real-world scenarios, a more targeted approach would be preferred to reduce n
 
 
 ### Lessons Learned
+---
 
 This exercise shows that even when passwords meet common complexity requirements 
 (e.g. uppercase, digits, symbols), they remain weak if they follow predictable patterns.
