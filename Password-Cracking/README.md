@@ -3,7 +3,9 @@ Exploring Password Cracking Techniques Using John the Ripper
 
 ### Tools used: 
 
-- ```John the Ripper```, ```hashid```, ```cut``` 
+- ```John the Ripper```, ```hashid```, ```cut```
+
+  Metri
 
 ### Scenario
 ---
@@ -61,35 +63,35 @@ I will create a Bash script to generate possible combinations for my rule.
 #!/bin/bash
 # Generates all possible combinations of John the Ripper rule commands
 
-commands=("sa@" "so0" "si1" "ss$" "ss5" "sS5" "st7" "sT7" "sA@" "sA4" "Az\"[0-9][0-9][0-9][0-9]\"")
+commands=("l" "sa@" "sE3" "so0" "si1" "ss$" "sS$" "st7" "sT7" "sA4" "Az\"[0-9][0-9][0-9][0-9]\"")
 rules=("")
 
 for command in "${commands[@]}"; do
-    new_rules=()
-    for rule in "${rules[@]}"; do
+new_rules=()
+for rule in "${rules[@]}"; do
         new_rule="$rule $command"
         new_rules+=("$new_rule")
-    done
-    rules+=("${new_rules[@]}")
-done
+   done
+   rules+=("${new_rules[@]}")
+ done
 
-for prefix in "l" "u" "c"; do
-    for rule in "${rules[@]}"; do
-        echo "${prefix}${rule}"
-    done
-done > bashSet.txt
+for rule in "${rules[@]}"; do
+        echo $rule
+   done > rules.txt
+
 
 ```
 Need to make this script executable 
 
-``` chmod +x LeetSpeak.sh ```
+``` chmod +x ruleSetScript.sh ```
 
-After running this script creates a bashSet.txt file containing the ruleset I need for modifying config file.
+After running this script creates a ```rules.txt``` file containing the ruleset I need for modifying config file.
 Now in the config file that I copied before I will add a custom ruleset under Rules section
 
-``` [List.Rules:Dinos]
+```
+[List.Rules:Dinos]
 ┌──(kali㉿kali)-[~/Git/Cybersecurity-Home-Lab-Projects/Password-Cracking/Files]
-└─$ cat johnDou.conf| grep Dinos -A 100
+└─$ cat johnRedacted.conf| grep Dinos -A 100
 [List.Rules:Dinos]
 :
 l
@@ -102,59 +104,51 @@ c
  ss$
 ...
 ``` 
-Now I need to run John with updated rules and see if I can crack remaining hashes.
+Now I need to run John with updated rules and see if I can crack remaining hashes. I  saved cracked passwords to file Passwords.txt
 
 ```
 ┌──(kali㉿kali)-[~/Git/Cybersecurity-Home-Lab-Projects/Password-Cracking/Files]
-└─$ john --wordlist=dinos.txt --rules=Dinos --config=johnDou.conf --format=raw-md5 hashes
+└─$ john --wordlist=dinos.txt --rules=Dinos --config=johnRedacted.conf --format=raw-md5 hashes > Passwords.txt
 ```
 
 ### Results
 ---
 
+Total hashes: 13
+Cracked with standart wordlist: 1
+Cracked with custom rules modification: 12
+Success rate: 100%
+
+
 Using John the Ripper, I was able to successfully crack multiple password hashes from the provided dataset.
+
 
 The initial dictionary attack using rockyou.txt resulted in 1 cracked password
 A targeted attack using a custom wordlist (dinosaur names) combined with rule-based transformations significantly improved results
 Applying leetspeak substitutions and appending 4-digit numeric patterns proved to be the most effective strategy.
 
-This demonstrates how predictable password patterns (e.g., common words + simple modifications) drastically reduce password strength, even when basic complexity rules are applied.
-
-From a defensive perspective, this highlights the importance of:
-- avoiding predictable password structures
-- enforcing stronger password policies
-- implementing multi-factor authentication (MFA)
+The rule generation script creates all combinations, which leads to inefficient rule sets.
+In real-world scenarios, a more targeted approach would be preferred to reduce noise and improve performance.
 
 
+### Lessons Learned
 
+This exercise shows that even when passwords meet common complexity requirements 
+(e.g. uppercase, digits, symbols), they remain weak if they follow predictable patterns.
 
+Patterns observed:
+- base word + 4 digits (very common)
+- limited leetspeak substitutions (a→@, e→3, o→0)
+- no randomness in structure
 
+From an attacker’s perspective:
+- rule-based attacks outperform pure dictionary attacks when patterns are known
+- small, targeted wordlists combined with custom rules are highly effective
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+From a defensive perspective:
+- password complexity rules alone are insufficient
+- password policies should discourage predictable transformations
+- MFA significantly reduces risk even if password is compromised
 
 
 
