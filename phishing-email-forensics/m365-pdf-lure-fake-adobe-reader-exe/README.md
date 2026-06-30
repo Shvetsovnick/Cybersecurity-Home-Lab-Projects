@@ -1,3 +1,6 @@
+# ⚠️ This repository contains real malware samples. See /artifacts/README.md before proceeding.
+
+
 ## Executive Summary: 
 
 This investigation analyzes a phishing email impersonating a Microsoft 365 file-sharing notification. The email contains a PDF attachment that redirected the user to a deceptive domain impersonating Adobe/Microsoft download infrastructure and attempted to deliver a Windows executable payload.  
@@ -52,7 +55,7 @@ SHA256 hash: 0261DE3A5A6A58101E7FEA5FDECDD59FE68508E46F0DF5F5BCA69D79A69FA51A
 
 ## Email header analysis: 
 
-Delivery chain looks as followed:  
+Delivery chain looks as follows:  
 
 [Sender] -> Microsoft 365 Canada YQ1P288MB0949.CANP288 52.101.191.99 Fri, 26 Jun 2026 19:55:30 +0000 -> 
 
@@ -70,7 +73,7 @@ CH4PR07MB11019 Fri, 26 Jun 2026 19:56:18 +0000 -> Inbox
 
  
 
-The message appears to have originated from Microsoft 365 infrastructure authorized for the sender domain. SPF passed. Earlier ARC results indicate DKIM/DMARC passed at a Microsoft hop, but downstream authentication results show DKIM as none and ARC as failed. Therefore, SPF/DMARK alignment does not prove the message is benign; it is more consistent with a legitimate sender account being abused/compromised rather than simple spoofing.  
+The message appears to have originated from Microsoft 365 infrastructure authorized for the sender domain. SPF passed. Earlier ARC results indicate DKIM/DMARC passed at a Microsoft hop, but downstream authentication results show DKIM as none and ARC as failed. Therefore, SPF/DMARC alignment does not prove the message is benign; it is more consistent with a legitimate sender account being abused/compromised rather than simple spoofing.  
 
   
 
@@ -82,7 +85,7 @@ The visible [To]  header shows the sender address itself, while the envelope/int
 
 ## Artifact Analysis: 
 
-The email contains an attachment that themed as Microsoft 365 document. The button located in the bottom part of the document leads user to hxxps[:]//pacifiveiw[.]net/reader which is somewhat typosquatting, made to represent "Pacific View".  
+The email contains a Microsoft 365-themed PDF attachment. The button located in the bottom part of the document leads user to hxxps[:]//pacifiveiw[.]net/reader which is somewhat typosquatting, made to represent "Pacific View".  
 
 VirusTotal search for the domain shows that it has been flagged for malicious activity.  
 
@@ -102,7 +105,7 @@ where message tells him that to open the attachment, he must update the Adobe re
 
 Message appears to be sent through Microsoft 365 infrastructure associated with the sender domain. Blocking the sender may lead to future disruption for business. At this point is highly suggested to inform vendor about possible account compromise, requiring taking necessary measures to prevent similar situations in the future.  
 
-Research on the domain that the attachment leads to shows malicious intent and no business justification for any employees needing to access this site. As it has a malicious reputation on VirusTotal, the entire domain can be blocked on the web proxy, preventing employees to connecting to the site.  
+Research on the domain that the attachment leads to shows malicious intent and no business justification for any employees needing to access this site. As it has a malicious reputation on VirusTotal, the entire domain can be blocked on the web proxy, preventing employees from connecting to the site.  
 
   
 
@@ -116,14 +119,14 @@ hxxps[:]//get[.]adobe[.]com[.]pacifiveiw[.]net
 
 ## Scope/Limitation:  
 
-Th executable payload was not detonated as part of this report. Further malware analysis would be required to determine persistence, C2 behavior, process activity, and host-based indicators. 
+The executable payload was not detonated as part of this report. Further malware analysis would be required to determine persistence, C2 behavior, process activity, and host-based indicators. 
 
-SEIM/EDR review was outside the scope of this exercise, as this investigation was conducted in a simulated environment.   
+SIEM/EDR review was outside the scope of this exercise, as this investigation was conducted in a simulated environment.   
 
  
 
 ## Conclusion 
 
-This email is accessed as malicious with high confidence. The message used a minimal social engineering lure, a PDF attachment, a deceptive Adobe/Microsoft-style redirect chain, and an executable payload download. The authentication results and delivery path suggest possible abuse or compromise of a legitimate sender mailbox rather than a simple spoofing.  
+This email is assessed as malicious with high confidence. The message used a minimal social engineering lure, a PDF attachment, a deceptive Adobe/Microsoft-style redirect chain, and an executable payload download. The authentication results and delivery path suggest possible abuse or compromise of a legitimate sender mailbox rather than a simple spoofing.  
 
 The strongest malicious indicators are the PDF-embedded URL, the deceptive [get[.]adobe[.]com[.]pacifiveiw[.]net] subdomain structure, the fake Adobe Reader update prompt, and the attempted delivery of a Windows executable. 
