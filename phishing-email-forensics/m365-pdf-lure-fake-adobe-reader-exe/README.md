@@ -71,7 +71,6 @@ MN2PR07MB7120 Fri, 26 Jun 2026 19:55:40 +0000 ->
 
 CH4PR07MB11019 Fri, 26 Jun 2026 19:56:18 +0000 -> Inbox 
 
- 
 
 The message appears to have originated from Microsoft 365 infrastructure authorized for the sender domain. SPF passed. Earlier ARC results indicate DKIM/DMARC passed at a Microsoft hop, but downstream authentication results show DKIM as none and ARC as failed. Therefore, SPF/DMARC alignment does not prove the message is benign; it is more consistent with a legitimate sender account being abused/compromised rather than simple spoofing.  
 
@@ -85,13 +84,23 @@ The visible [To]  header shows the sender address itself, while the envelope/int
 
 ## Artifact Analysis: 
 
+ <img width="1196" height="874" alt="Screenshot 2026-06-30 081704" src="https://github.com/user-attachments/assets/d86c7a8c-575e-495f-bc3c-3d66bee822f0" />
+
+ ---
+ 
+ <img width="709" height="726" alt="Screenshot 2026-06-30 082215" src="https://github.com/user-attachments/assets/fce9b208-14de-428e-a066-eac8b4d779c4" />
+
+---
+
 The email contains a Microsoft 365-themed PDF attachment. The button located in the bottom part of the document leads user to hxxps[:]//pacifiveiw[.]net/reader which is somewhat typosquatting, made to represent "Pacific View".  
 
-VirusTotal search for the domain shows that it has been flagged for malicious activity.  
+ 
 
 URL2PNG shows that page cannot be found. 
 
-  
+ <img width="1658" height="896" alt="Screenshot 2026-06-30 082320" src="https://github.com/user-attachments/assets/888859e1-a1a7-4981-a59d-cab2a4b1476a" />
+
+---
 
 After visiting the domain user being redirected to another page (hxxps[:]//get[.]adobe[.]com[.]pacifiveiw[.]net/reader-download-trackingid-R9YU1LF8K-accepted/adobe/).  
 
@@ -99,6 +108,13 @@ The redirected URL abuses a deceptive subdomain structure [get.adobe.com.pacifiv
 
 where message tells him that to open the attachment, he must update the Adobe reader and file "En-reader-lavwallWin.exe" starting to download automatically. The file was sent to the forensic team for further investigation.  
 
+<img width="1450" height="857" alt="Screenshot 2026-06-30 083127" src="https://github.com/user-attachments/assets/6abec68f-19c7-4f67-831b-2ef9bcd1b2dd" />
+<img width="1369" height="852" alt="Screenshot 2026-06-30 082932" src="https://github.com/user-attachments/assets/b5162214-39ab-46da-bd72-b017d667608c" />
+<img width="1365" height="853" alt="Screenshot 2026-06-30 083021" src="https://github.com/user-attachments/assets/ff7c8f96-9d82-4742-aa27-4abdb2a2130f" />
+
+---
+
+VirusTotal search for the domain shows that it has been flagged for malicious activity. 
    
 
 ## Suggested Defensive Measures: 
