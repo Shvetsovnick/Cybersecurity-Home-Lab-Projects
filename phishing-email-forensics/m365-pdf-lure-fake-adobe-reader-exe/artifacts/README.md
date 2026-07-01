@@ -10,3 +10,5 @@ DO NOT open attachments or click any links.
 DO NOT execute any files extracted from this sample.
 
 SHA256 hashes are provided in the main report for verification.
+
+password for zip archive: infected
